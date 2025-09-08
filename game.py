@@ -1,6 +1,7 @@
 import random
 from goblin import Goblin
 from hero import Hero
+from boss import Giant
 
 
 def main():
@@ -11,17 +12,17 @@ def main():
     print("༼ ᓄºل͟º ༽ᓄ   ᕦ(ò_óˇ)ᕤ")
 
     # Create a hero
-    hero = Hero("pekka")
+    hero = Hero("bob")
 
     # Create goblins ༼ ºل͟º ༽ ༼ ºل͟º ༽ ༼ ºل͟º ༽
-    goblins = [Goblin(f"Goblin {i+1}") for i in range(10)]
+    goblins = [Goblin(f"Goblin {i+1}", 'green') for i in range(10)]
 
     # Keep track of how many goblins were defeated
     defeated_goblins = 0
 
     # Battle Loop 
     while hero.is_alive() and any(goblin.is_alive() for goblin in goblins):
-        print("\nNew Round!")
+        #print("\nNew Round!")
         rounds+=1
         
         # Hero's turn to attack
@@ -53,7 +54,25 @@ def main():
         print(f"\nThe hero has been defeated. Game Over. (｡•́︿•̀｡)")
         print("You survived "+str(rounds)+" rounds.")
         print("You hit for a total of "+str(totdamage)+" damage.")
+        
+    if hero.is_alive():      
+        fred=Giant('fred')
 
+        print("Boss time")
+        while hero.is_alive() and fred.is_alive():
+            rounds+=1
+            #print("New Round!")
+            damage=hero.strike()
+            fred.take_damage(damage)
+            damage=fred.attack()
+            hero.receive_damage(damage)
+            
+            
+        if hero.is_alive():
+            print('fred is dead') 
+        else:
+            print(f"\nThe hero has been defeated. Game Over. (｡•́︿•̀｡)")
+            print("You survived "+str(rounds)+" rounds.")
 
     # Final tally of goblins defeated
     print(f"\nTotal goblins defeated: {defeated_goblins} / {len(goblins)}")
